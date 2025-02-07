@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Quest ❤️</title>
+    <style>
+        :root {
+            --primary-pink: #ff6b6b;
+            --secondary-pink: #ff8e8e;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+            font-family: 'Comic Sans MS', cursive;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            color: #ff4757;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            padding: 15px 40px;
+            margin: 10px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #yes {
+            background: #2ed573;
+            color: white;
+            transform: scale(1);
+        }
+
+        #no {
+            background: #ff6b6b;
+            color: white;
+            position: absolute;
+            transition: transform 0.3s ease;
+        }
+
+        #loveMeter {
+            width: 200px;
+            height: 20px;
+            background: #eee;
+            border-radius: 10px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        #meterProgress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ff4757);
+            transition: width 0.5s ease;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            animation: confettiFall 3s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Dearest, Will You Be Mine Forever? 💘</h1>
+        <div id="loveMeter">
+            <div id="meterProgress"></div>
+        </div>
+        <button id="yes" class="btn">Absolutely Yes! 💍</button>
+        <button id="no" class="btn">Hmm... 🤔</button>
+    </div>
+
+    <script>
+        const noButton = document.getElementById('no');
+        const yesButton = document.getElementById('yes');
+        const meterProgress = document.getElementById('meterProgress');
+        let loveLevel = 0;
+        let escapeCount = 0;
+        const funnyMessages = [
+            "Nice try! 😜",
+            "You can't resist! 💘",
+            "Still thinking? 🤨",
+            "I know you want to say Yes! 😏",
+            "Persistent, aren't we? 😌"
+        ];
+
+        // Create floating hearts
+        function createHearts() {
+            for(let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(heart);
+            }
+        }
+
+        // Confetti explosion
+        function createConfetti() {
+            for(let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 1 + 's';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(confetti);
+            }
+        }
+
+        noButton.addEventListener('mouseover', () => {
+            const containerRect = document.querySelector('.container').getBoundingClientRect();
+            const maxX = containerRect.width - noButton.offsetWidth;
+            const maxY = containerRect.height - noButton.offsetHeight;
+            
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+            
+            noButton.style.transform = `translate(${newX}px, ${newY}px)`;
+            noButton.textContent = funnyMessages[escapeCount % funnyMessages.length];
+            escapeCount++;
+            
+            loveLevel = Math.min(loveLevel + 5, 100);
+            meterProgress.style.width = loveLevel + '%';
+        });
+
+        yesButton.addEventListener('mouseover', () => {
+            yesButton.style.transform = 'scale(1.1)';
+            loveLevel = Math.min(loveLevel + 1, 100);
+            meterProgress.style.width = loveLevel + '%';
+        });
+
+        yesButton.addEventListener('click', () => {
+            createConfetti();
+            document.body.innerHTML = `
+                <div class="container">
+                    <h1>You've Made Me the Happiest! 💖</h1>
+                    <p style="font-size: 24px; color: #2ed573;">Let's Grow Old Together 👵👴</p>
+                    <div style="font-size: 100px; animation: float 2s infinite;">🎉💍🎉</div>
+                    <p style="margin-top: 20px;">Love Level: ${loveLevel}% ❤️</p>
+                </div>
+            `;
+            new Audio('https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg').play();
+        });
+
+        // Initial setup
+        createHearts();
+        new Audio('https://actions.google.com/sounds/v1/cartoon/cartoon_whistle.ogg').play();
+    </script>
+</body>
+</html>
