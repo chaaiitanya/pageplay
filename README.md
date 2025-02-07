@@ -1,6 +1,7 @@
 # Digital Love Proposal Interactive Page 💑
 
 A charming interactive webpage that creates a playful and romantic proposal experience. Built with pure HTML, CSS, and JavaScript.
+use the link to check it out. i have used netlify to deploy to the web. 
 
 ## Features
 
